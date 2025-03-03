@@ -17,7 +17,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt  
 
 # Load dataset  
-data = pd.read_csv('/content/diabetes.csv', header=None)  
+![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121313.png)
 
 # Assign column names  
 data.columns = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin',  
