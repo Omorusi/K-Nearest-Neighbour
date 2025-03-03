@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 
 
 # Check for any missing values 
-https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121427.png?raw=true
+
 ![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121427.png?raw=true
 )
 # Visualizing Outcome Distribution  
