@@ -13,12 +13,9 @@ This project implements the **K-Nearest Neighbors (KNN)** algorithm for classifi
 ### **Key Steps:**  
 ```python
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-df = pd.read_csv("dataset.csv")
-print(df.info())  # Checking data types and missing values
-print(df.describe())  # Summary statistics
+data = pd.read_csv('/content/diabetes.csv',header=None)
+data.head()
 
-sns.pairplot(df, hue='target')  # Visualizing class distribution
-plt.show()
+data.columns = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age','Outcome']
+data.head()
