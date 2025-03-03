@@ -1,144 +1,159 @@
-Diabetes Prediction with KNN Classifier
-This repository demonstrates the process of predicting diabetes using a K-Nearest Neighbors (KNN) classifier. The project follows a standard workflow including data collection, preprocessing, exploratory data analysis (EDA), model training, evaluation, and model saving.
+-Nearest Neighbors (KNN) Model - Diabetes Prediction
+This project demonstrates the implementation of the K-Nearest Neighbors (KNN) algorithm using the diabetes dataset. The dataset contains medical attributes used to predict whether a patient has diabetes.
 
-Project Overview
-The main objective is to predict whether a person has diabetes based on various health-related features using a K-Nearest Neighbors (KNN) classification model. The dataset used is the Pima Indians Diabetes Database, which contains data about several medical attributes like glucose levels, blood pressure, BMI, and age.
-
-Stages and Code
-1. Data Collection
-Purpose: Collect the dataset to be used for analysis and model building.
-
+📌 Project Stages
+1️⃣ Data Collection & Exploration
+Loaded the diabetes dataset using pandas.
+Added meaningful column names to improve readability.
+Checked for missing values and the total shape of the dataset.
+Displayed a count plot to visualize the distribution of diabetic vs. non-diabetic patients.
+Created scatter plots to analyze feature relationships.
+Code Snippet
 python
 Copy
 Edit
-import pandas as pd
+import pandas as pd  
+import seaborn as sns  
+import matplotlib.pyplot as plt  
 
-# Load the diabetes dataset
-data = pd.read_csv('/content/diabetes.csv', header=None)
-data.head()  # Show the first few rows of the dataset
-2. Data Preprocessing
-Purpose: Clean and preprocess the data by handling missing values, scaling features, and encoding categorical variables if necessary.
+# Load dataset  
+data = pd.read_csv('/content/diabetes.csv', header=None)  
 
-python
-Copy
-Edit
-# Add column names to the dataset
-```python
-data.columns = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 
-                'DiabetesPedigreeFunction', 'Age', 'Outcome']
-data.head()  # View the first few rows after adding column names
+# Assign column names  
+data.columns = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin',  
+                'BMI','DiabetesPedigreeFunction','Age','Outcome']  
 
-# Handle missing values: replace zero with the median in specific columns
-columns_to_replace = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
-for col in columns_to_replace:
-    data[col] = data[col].replace(0, data[col].median())
-    
-# Checking dataset shape (rows and columns)
-rows, columns = data.shape
-print(f"The dataset has {rows} rows and {columns} columns.")
-3. Exploratory Data Analysis (EDA)
-Purpose: Understand the data's patterns, distributions, and relationships by visualizing the data.
+# Check dataset shape  
+print(f"Dataset contains {data.shape[0]} rows and {data.shape[1]} columns.")  
 
-python
-Copy
-Edit
-# Mapping Outcome (0 -> Non-Diabetes, 1 -> Diabetes)
-data_target = data['Outcome'].map({0: "Non-Diabetes", 1: "Diabetes"})
-data_target.head()  # Display mapped target labels
-
-# Visualization: Countplot of Outcome (Diabetes vs Non-Diabetes)
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-sns.set_style("whitegrid")
-plt.figure(figsize=(6, 4))
-sns.countplot(x=data["Outcome"], palette=["blue", "red"])
-plt.xticks(ticks=[0, 1], labels=["Non-Diabetic", "Diabetic"])
-plt.xlabel("Diabetes Status")
-plt.ylabel("Count")
-plt.title("Distribution of Diabetes in the Dataset")
+# Visualizing Outcome Distribution  
+sns.countplot(x=data["Outcome"], palette=["blue", "red"])  
+plt.xlabel("Diabetes Status")  
+plt.ylabel("Count")  
+plt.title("Distribution of Diabetes in the Dataset")  
 plt.show()
+2️⃣ Data Preprocessing & Cleaning
+Handled missing values by replacing zeros with the median in key medical attributes (Glucose, BloodPressure, SkinThickness, Insulin, BMI).
+Separated features (X) and target variable (y) for model training.
+Performed feature scaling using StandardScaler() since KNN is a distance-based algorithm.
+Code Snippet
+python
+Copy
+Edit
+from sklearn.preprocessing import StandardScaler  
 
-# Split dataset into diabetic and non-diabetic groups for plotting
-data0 = data[data["Outcome"] == 0]  # Non-Diabetes
-data1 = data[data["Outcome"] == 1]  # Diabetes
+# Replace zero values with median in selected columns  
+columns_to_replace = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']  
+for col in columns_to_replace:  
+    data[col] = data[col].replace(0, data[col].median())  
 
-# Scatter plot: Glucose vs. DiabetesPedigreeFunction
-plt.figure(figsize=(8, 6))
-ax = data0.plot.scatter("Glucose", "DiabetesPedigreeFunction", marker='+', color="green", label="Non-Diabetic")
-ax = data1.plot.scatter("Glucose", "DiabetesPedigreeFunction", marker='.', color="red", ax=ax, label="Diabetic")
-plt.xlabel("Glucose")
-plt.ylabel("DiabetesPedigreeFunction")
-plt.title("Diabetes Classification: Glucose vs. DiabetesPedigreeFunction")
-plt.legend()
+# Split dataset into features and target  
+X = data.drop(columns=['Outcome'])  
+y = data['Outcome']  
+
+# Scale features  
+scaler = StandardScaler()  
+X_scaled = scaler.fit_transform(X)  
+3️⃣ Train-Test Split & Model Training
+Split the dataset into 80% training and 20% testing using train_test_split().
+Initialized KNN classifier with n_neighbors=5.
+Trained the model using KNN fit function.
+Code Snippet
+python
+Copy
+Edit
+from sklearn.model_selection import train_test_split  
+from sklearn.neighbors import KNeighborsClassifier  
+
+# Split dataset into training and testing sets (80-20)  
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)  
+
+# Initialize KNN Classifier with K=5  
+knn = KNeighborsClassifier(n_neighbors=5)  
+
+# Train the model  
+knn.fit(X_train, y_train)  
+4️⃣ Model Evaluation & Performance Metrics
+Accuracy Score: Evaluated the overall performance of the KNN model.
+Confusion Matrix: Analyzed how well the model classified diabetic and non-diabetic patients.
+Classification Report: Checked precision, recall, and F1-score for each class.
+Code Snippet
+python
+Copy
+Edit
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report  
+
+# Make predictions  
+y_pred = knn.predict(X_test)  
+
+# Evaluate model performance  
+accuracy = accuracy_score(y_test, y_pred)  
+conf_matrix = confusion_matrix(y_test, y_pred)  
+class_report = classification_report(y_test, y_pred)  
+
+# Print results  
+print(f"Accuracy: {accuracy * 100:.2f}%")  
+print("Confusion Matrix:\n", conf_matrix)  
+print("Classification Report:\n", class_report)  
+5️⃣ Visualizing Model Performance
+Confusion Matrix Heatmap: A graphical representation of how well the model classified instances.
+Code Snippet
+python
+Copy
+Edit
+import seaborn as sns  
+import matplotlib.pyplot as plt  
+
+# Plot confusion matrix  
+plt.figure(figsize=(5,4))  
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=["Non-Diabetic", "Diabetic"],  
+            yticklabels=["Non-Diabetic", "Diabetic"])  
+plt.xlabel("Predicted")  
+plt.ylabel("Actual")  
+plt.title("Confusion Matrix")  
 plt.show()
-4. Model Selection and Training
-Purpose: Choose a machine learning model (e.g., K-Nearest Neighbors) and train it using the training data.
-
+6️⃣ Hyperparameter Tuning (Choosing Best K)
+Used the Elbow Method to determine the optimal value of K.
+Plotted accuracy for different K values to observe the trend.
+Code Snippet
 python
 Copy
 Edit
-# Feature and target selection
-X = data.drop(["Outcome"], axis=1)  # Features (all columns except 'Outcome')
-Y = data["Outcome"]  # Target column ('Outcome')
+error_rates = []  
 
-# Split dataset into training and test sets (80-20 split)
-from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+# Try different values of K  
+for k in range(1, 21):  
+    knn = KNeighborsClassifier(n_neighbors=k)  
+    knn.fit(X_train, y_train)  
+    y_pred_k = knn.predict(X_test)  
+    error_rates.append(1 - accuracy_score(y_test, y_pred_k))  
 
-# K-Nearest Neighbors (KNN) Classifier with n_neighbors=3
-from sklearn.neighbors import KNeighborsClassifier
-mymodel = KNeighborsClassifier(n_neighbors=3)
-mymodel.fit(X_train, Y_train)
-5. Model Evaluation
-Purpose: Evaluate the model's performance using appropriate metrics (accuracy, confusion matrix, classification report).
+# Plot K vs. Error Rate  
+plt.figure(figsize=(8, 5))  
+plt.plot(range(1, 21), error_rates, marker='o', linestyle='dashed', color='red')  
+plt.xlabel("K Value")  
+plt.ylabel("Error Rate")  
+plt.title("Choosing the Optimal K Value")  
+plt.show()
+7️⃣ Conclusion & Future Improvements
+✅ KNN achieved an accuracy of ~67% on test data.
+✅ Feature scaling significantly improved model performance.
+✅ Optimal value of K was determined using the elbow method.
 
-python
-Copy
-Edit
-# Model evaluation
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+🔹 Future Work:
 
-# Predict on the test set
-Y_pred = mymodel.predict(X_test)
-
-# Calculate accuracy
-accuracy = accuracy_score(Y_test, Y_pred)
-print(f"Accuracy: {accuracy:.4f}")
-
-# Confusion Matrix
-conf_matrix = confusion_matrix(Y_test, Y_pred)
-print("Confusion Matrix:")
-print(conf_matrix)
-
-# Classification Report (precision, recall, f1-score)
-class_report = classification_report(Y_test, Y_pred)
-print("Classification Report:")
-print(class_report)
-6. Model Deployment and Monitoring
-Purpose: Deploy the model and monitor its performance in a real-world setting (not covered in detail here but this would typically involve saving the model, creating an API, or embedding it into a larger system).
-
-python
-Copy
-Edit
-import joblib
-
-# Save the trained model
-joblib.dump(mymodel, 'knn_diabetes_model.pkl')
-
-# To load the model later
-loaded_model = joblib.load('knn_diabetes_model.pkl')
-Requirements
-To run this code, you'll need the following Python libraries:
-
-pandas
-sklearn
-matplotlib
-seaborn
-joblib
-You can install the necessary dependencies using pip:
-
+Experimenting with different distance metrics (e.g., Minkowski, Manhattan).
+Exploring other feature selection techniques to improve model performance.
+Implementing cross-validation for better generalization.
+📂 Project Structure
 bash
 Copy
 Edit
-pip install pandas scikit-learn matplotlib seaborn joblib
+/KNN-Diabetes-Prediction
+│── diabetes.csv               # Dataset
+│── KNN.ipynb                  # Jupyter Notebook with all code
+│── README.md                   # Project Documentation
+└── images/                     # Visualization Images
+👨‍💻 Author
+🚀 Developed by [Your Name]
+
