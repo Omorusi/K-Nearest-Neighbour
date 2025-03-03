@@ -111,48 +111,8 @@ plt.xlabel("Predicted")
 plt.ylabel("Actual")  
 plt.title("Confusion Matrix")  
 plt.show()
-6️⃣ Hyperparameter Tuning (Choosing Best K)
-Used the Elbow Method to determine the optimal value of K.
-Plotted accuracy for different K values to observe the trend.
-Code Snippet
-python
-Copy
-Edit
-error_rates = []  
 
-# Try different values of K  
-for k in range(1, 21):  
-    knn = KNeighborsClassifier(n_neighbors=k)  
-    knn.fit(X_train, y_train)  
-    y_pred_k = knn.predict(X_test)  
-    error_rates.append(1 - accuracy_score(y_test, y_pred_k))  
 
-# Plot K vs. Error Rate  
-plt.figure(figsize=(8, 5))  
-plt.plot(range(1, 21), error_rates, marker='o', linestyle='dashed', color='red')  
-plt.xlabel("K Value")  
-plt.ylabel("Error Rate")  
-plt.title("Choosing the Optimal K Value")  
-plt.show()
-7️⃣ Conclusion & Future Improvements
-✅ KNN achieved an accuracy of ~67% on test data.
-✅ Feature scaling significantly improved model performance.
-✅ Optimal value of K was determined using the elbow method.
-
-🔹 Future Work:
-
-Experimenting with different distance metrics (e.g., Minkowski, Manhattan).
-Exploring other feature selection techniques to improve model performance.
-Implementing cross-validation for better generalization.
-📂 Project Structure
-bash
-Copy
-Edit
-/KNN-Diabetes-Prediction
-│── diabetes.csv               # Dataset
-│── KNN.ipynb                  # Jupyter Notebook with all code
-│── README.md                   # Project Documentation
-└── images/                     # Visualization Images
 👨‍💻 Author
 🚀 Developed by [Your Name]
 
