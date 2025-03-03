@@ -19,7 +19,4 @@ Model Evaluation:
 Checked the accuracy of the model to assess its performance.
 Considered using different values of K to optimize the model’s accuracy.
  ![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20232234.png?raw=true)
-Next Steps
-Tune K value to find the best fit.
-Implement confusion matrix, precision, recall, and F1-score for better evaluation.
-Normalize/scale data if needed for better KNN performance.
+
