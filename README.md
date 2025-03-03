@@ -1,4 +1,4 @@
--Nearest Neighbors (KNN) Model - Diabetes Prediction
+# Nearest Neighbors (KNN) Model - Diabetes Prediction
 This project demonstrates the implementation of the K-Nearest Neighbors (KNN) algorithm using the diabetes dataset. The dataset contains medical attributes used to predict whether a patient has diabetes.
 
 📌 Project Stages
