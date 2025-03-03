@@ -16,23 +16,19 @@ import pandas as pd
 import seaborn as sns  
 import matplotlib.pyplot as plt  
 
-# Load dataset  
+# Load dataset & Assign column names 
 ![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121313.png)
 
-# Assign column names  
-data.columns = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin',  
-                'BMI','DiabetesPedigreeFunction','Age','Outcome']  
 
-# Check dataset shape  
-print(f"Dataset contains {data.shape[0]} rows and {data.shape[1]} columns.")  
-
+# Check for any missing values 
+https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121427.png?raw=true
+![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121427.png?raw=true
+)
 # Visualizing Outcome Distribution  
-sns.countplot(x=data["Outcome"], palette=["blue", "red"])  
-plt.xlabel("Diabetes Status")  
-plt.ylabel("Count")  
-plt.title("Distribution of Diabetes in the Dataset")  
-plt.show()
+![image alt]()
+
 2️⃣ Data Preprocessing & Cleaning
+Changing Diabetes & Non-Diabetes to numerical value 
 Handled missing values by replacing zeros with the median in key medical attributes (Glucose, BloodPressure, SkinThickness, Insulin, BMI).
 Separated features (X) and target variable (y) for model training.
 Performed feature scaling using StandardScaler() since KNN is a distance-based algorithm.
@@ -41,7 +37,10 @@ python
 Copy
 Edit
 from sklearn.preprocessing import StandardScaler  
-
+# Change Diabetes = 1 & Non-Diabetes = 0  to numerical value 
+![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20121959.png?raw=true)
+Representing the data of non-diabetes vs diabetes
+![image alt](https://github.com/Omorusi/K-Nearest-Neighbour/blob/main/Screenshot%202025-03-03%20122042.png?raw=true)
 # Replace zero values with median in selected columns  
 columns_to_replace = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']  
 for col in columns_to_replace:  
