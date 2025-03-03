@@ -11,7 +11,7 @@ This project implements the **K-Nearest Neighbors (KNN)** algorithm for classifi
 - **Visualization** was performed using histograms, pair plots, and scatter plots to understand feature relationships.  
 
 ### **Key Steps:**  
-```python
+
 import pandas as pd
 
 data = pd.read_csv('/content/diabetes.csv',header=None)
