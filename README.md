@@ -23,11 +23,11 @@ python
 Copy
 Edit
 # Add column names to the dataset
--- python
+```python
 data.columns = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 
                 'DiabetesPedigreeFunction', 'Age', 'Outcome']
 data.head()  # View the first few rows after adding column names
---
+
 # Handle missing values: replace zero with the median in specific columns
 columns_to_replace = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
 for col in columns_to_replace:
