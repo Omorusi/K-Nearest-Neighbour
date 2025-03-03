@@ -19,3 +19,6 @@ data.head()
 
 data.columns = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age','Outcome']
 data.head()
+
+## **1️⃣ Data Collection & Exploration**  
+### **Stage Overview:**  
